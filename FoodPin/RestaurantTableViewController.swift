@@ -101,31 +101,62 @@ class RestaurantTableViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete{
-            //Delete the row from the Data Source
-            self.restaurantNames.removeAtIndex(indexPath.row);
-            self.restaurantLocations.removeAtIndex(indexPath.row);
-            self.restaurantIsVisited.removeAtIndex(indexPath.row);
-            self.restaurantImages.removeAtIndex(indexPath.row);
-            self.restaurantTypes.removeAtIndex(indexPath.row);
-            
-            //Update view of TableView
-            //self.tableView.reloadData();
-            //Update view of TableView with animation
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        }
-        
-        print("Total Item: \(self.restaurantNames.count)")
-        for name in restaurantNames {
-            print(name)
-        }
-    }
+//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if editingStyle == .Delete{
+//            //Delete the row from the Data Source
+//            self.restaurantNames.removeAtIndex(indexPath.row);
+//            self.restaurantLocations.removeAtIndex(indexPath.row);
+//            self.restaurantIsVisited.removeAtIndex(indexPath.row);
+//            self.restaurantImages.removeAtIndex(indexPath.row);
+//            self.restaurantTypes.removeAtIndex(indexPath.row);
+//            
+//            //Update view of TableView
+//            //self.tableView.reloadData();
+//            //Update view of TableView with animation
+//            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        }
+//        
+//        print("Total Item: \(self.restaurantNames.count)")
+//        for name in restaurantNames {
+//            print(name)
+//        }
+//    }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        var shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Share", handler: {(action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+        let shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Share", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+                let shareMenu = UIAlertController(title: nil, message: "Share using", preferredStyle: .ActionSheet)
+                let twitterAction = UIAlertAction(title: "Twitter", style: UIAlertActionStyle.Default, handler: nil)
+                let facebookAction = UIAlertAction(title: "Facebook", style: UIAlertActionStyle.Default, handler: nil)
+                let emailAction = UIAlertAction(title: "Email", style: UIAlertActionStyle.Default, handler: nil)
+                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+ 
+                shareMenu.addAction(twitterAction)
+                shareMenu.addAction(facebookAction)
+                shareMenu.addAction(emailAction)
+                shareMenu.addAction(cancelAction)
             
-        })
+                self.presentViewController(shareMenu, animated: true, completion: nil)
+            }
+        )
+        
+        
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler: {(action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
+                //Delete the row from the Data source
+                self.restaurantNames.removeAtIndex(indexPath.row)
+                self.restaurantTypes.removeAtIndex(indexPath.row)
+                self.restaurantLocations.removeAtIndex(indexPath.row)
+                self.restaurantIsVisited.removeAtIndex(indexPath.row)
+                self.restaurantImages.removeAtIndex(indexPath.row)
+            
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+        )
+      
+        shareAction.backgroundColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
+        deleteAction.backgroundColor = UIColor(red: 52.0/255.0, green: 73.0/255.0, blue: 94.0/255.0, alpha: 1.0)
+        
+        return [deleteAction, shareAction]
     }
     
     /*
