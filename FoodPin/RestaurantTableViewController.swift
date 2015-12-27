@@ -21,6 +21,7 @@ class RestaurantTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ok moi ");
     }
 
     override func didReceiveMemoryWarning() {
