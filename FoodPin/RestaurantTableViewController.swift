@@ -100,6 +100,34 @@ class RestaurantTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
     }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete{
+            //Delete the row from the Data Source
+            self.restaurantNames.removeAtIndex(indexPath.row);
+            self.restaurantLocations.removeAtIndex(indexPath.row);
+            self.restaurantIsVisited.removeAtIndex(indexPath.row);
+            self.restaurantImages.removeAtIndex(indexPath.row);
+            self.restaurantTypes.removeAtIndex(indexPath.row);
+            
+            //Update view of TableView
+            //self.tableView.reloadData();
+            //Update view of TableView with animation
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+        
+        print("Total Item: \(self.restaurantNames.count)")
+        for name in restaurantNames {
+            print(name)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        var shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Share", handler: {(action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
+        })
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
